@@ -1,0 +1,8 @@
+﻿*.ini
+*.log
+*.tmp
+*.bak
+*.disabled.ahk
+.ahk_hub_runner__*.ahk
+Backup/
+
