@@ -26,3 +26,6 @@ Both reviewers rejected empty commits, generic issue spam, and adding GitHub Act
 - AutoHotkey validation was run with no parser output.
 - Changed-file privacy scan returned no matches for local path or credential patterns.
 - GitHub license API reports MIT after the license text normalization.
+## Security policy no-change follow-up
+
+A security-scope reviewer and anti-churn reviewer evaluated whether this small AutoHotkey utility should receive a root SECURITY.md. Both recommended not adding copied per-repository security policy files because the script has no network service, dependency supply chain, package distribution, credential handling, or external input surface that would justify a heavier security process. The agreed threshold is to add a security policy later only if the project starts handling sensitive data, network/API calls, distributed binaries, or meaningful external issue traffic.
