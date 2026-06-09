@@ -11,12 +11,12 @@ Windows automation scripts tend to multiply into separate tray icons, startup sh
 - Tray popup for module discovery and launch
 - Module-level controls for run, edit, and open-folder workflows
 - Startup registration helpers for users who want the hub available after login
-- Public-safe layout that avoids bundling generated runners or private config
+- Public-safe layout that avoids bundling generated runners, local modules, or private config
 
 ## Quick Start
 
 1. Install AutoHotkey v2 on Windows.
-2. Download $(System.Collections.Hashtable.Script) from this repository.
+2. Download `1Hub.ahk` from this repository.
 3. Review the configuration notes below.
 4. Run the script with AutoHotkey v2.
 
