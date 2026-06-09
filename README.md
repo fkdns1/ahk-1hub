@@ -1,21 +1,47 @@
-﻿# 1Hub
+# 1Hub
 
-A small AutoHotkey v2 tray hub for launching and managing a folder of AHK modules from one popup panel.
+A tray-first AutoHotkey v2 hub for launching, editing, and supervising small AHK modules from one place.
 
-## Requirements
+## Why this exists
 
-- Windows
-- AutoHotkey v2.0
+Windows automation scripts tend to multiply into separate tray icons, startup shortcuts, and one-off launch commands. 1Hub keeps that workflow in one compact tray panel so individual modules can remain small.
 
-## Usage
+## Features
 
-Download the .ahk file and run it with AutoHotkey v2. Review the configuration variables near the top of the script before using it.
+- Tray popup for module discovery and launch
+- Module-level controls for run, edit, and open-folder workflows
+- Startup registration helpers for users who want the hub available after login
+- Public-safe layout that avoids bundling generated runners or private config
 
-## Notes
+## Quick Start
 
-This repository contains a sanitized public copy. Local machine paths, generated runner files, and private runtime configuration are intentionally excluded.
+1. Install AutoHotkey v2 on Windows.
+2. Download $(System.Collections.Hashtable.Script) from this repository.
+3. Review the configuration notes below.
+4. Run the script with AutoHotkey v2.
 
-## Development Notes
+## Configuration
 
-See [WORKLOG.md](WORKLOG.md) for the Codex-assisted iteration notes used to shape this script.
+Review the constants near the top of the script before first run. Keep machine-specific module folders and private configuration outside the repository.
 
+## Validation
+
+The public copy is checked with AutoHotkey's validation mode:
+
+`powershell
+AutoHotkey64.exe /Validate /ErrorStdOut 1Hub.ahk
+`
+
+See [docs/VALIDATION.md](docs/VALIDATION.md) for the current manual test checklist.
+
+## Project Status
+
+This is a sanitized public release of a personal Windows automation utility. The repository keeps the useful script, documentation, and project notes while excluding generated runner files, private settings, and machine-specific paths.
+
+## Documentation
+
+- [WORKLOG.md](WORKLOG.md) records the Codex-assisted iteration notes.
+- [CHANGELOG.md](CHANGELOG.md) records public release history.
+- [ROADMAP.md](ROADMAP.md) tracks planned improvements.
+- [CONTRIBUTING.md](CONTRIBUTING.md) explains how to report issues or propose changes.
+- [docs/DESIGN.md](docs/DESIGN.md) summarizes the design boundaries.
