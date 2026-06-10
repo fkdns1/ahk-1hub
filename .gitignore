@@ -1,4 +1,5 @@
-﻿*.ini
+﻿# Needed because runtime settings, logs, backups, disabled scripts, and generated runners are local state.
+*.ini
 *.log
 *.tmp
 *.bak
