@@ -25,7 +25,8 @@ SetWorkingDir A_ScriptDir
 ; -----------------------------
 AUTO_START_MODULES_ON_LAUNCH := true   ; true = start every discovered module when Hub starts.
 USE_HIDDEN_RUNNERS := true              ; true = generate #NoTrayIcon runner files next to modules.
-MAX_ROWS_VISIBLE := 12                  ; Prevents an oversized popup if the folder has many scripts.`nAUTO_START_ONLY_TRUSTED_MODULE_FOLDER := true ; true = disable auto-start for custom module folders outside the bundled modules folder.
+MAX_ROWS_VISIBLE := 12                  ; Prevents an oversized popup if the folder has many scripts.
+AUTO_START_ONLY_TRUSTED_MODULE_FOLDER := true ; true = disable auto-start for custom module folders outside the bundled modules folder.
 
 ; -----------------------------
 ; Global state
@@ -33,7 +34,10 @@ MAX_ROWS_VISIBLE := 12                  ; Prevents an oversized popup if the fol
 ConfigFile := A_ScriptDir "\AHK_Hub.ini"
 StartupShortcutName := "1Hub.lnk"
 DefaultModuleFolder := A_ScriptDir "\modules"
-ScriptFolder := LoadScriptFolder()`nif AUTO_START_ONLY_TRUSTED_MODULE_FOLDER && !IsTrustedModuleFolder(ScriptFolder)`n    AUTO_START_MODULES_ON_LAUNCH := false`nModules := []                           ; Array of {Name, Path}
+ScriptFolder := LoadScriptFolder()
+if AUTO_START_ONLY_TRUSTED_MODULE_FOLDER && !IsTrustedModuleFolder(ScriptFolder)
+    AUTO_START_MODULES_ON_LAUNCH := false
+Modules := []                           ; Array of {Name, Path}
 Pids := Map()                           ; Module full path -> PID
 PopupGui := ""
 PopupOpenedActiveHwnd := 0
