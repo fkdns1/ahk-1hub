@@ -25,7 +25,7 @@ SetWorkingDir A_ScriptDir
 ; -----------------------------
 AUTO_START_MODULES_ON_LAUNCH := true   ; true = start every discovered module when Hub starts.
 USE_HIDDEN_RUNNERS := true              ; true = generate #NoTrayIcon runner files next to modules.
-MAX_ROWS_VISIBLE := 12                  ; Prevents an oversized popup if the folder has many scripts.
+MAX_ROWS_VISIBLE := 12                  ; Prevents an oversized popup if the folder has many scripts.`nAUTO_START_ONLY_TRUSTED_MODULE_FOLDER := true ; true = disable auto-start for custom module folders outside the bundled modules folder.
 
 ; -----------------------------
 ; Global state
@@ -33,8 +33,7 @@ MAX_ROWS_VISIBLE := 12                  ; Prevents an oversized popup if the fol
 ConfigFile := A_ScriptDir "\AHK_Hub.ini"
 StartupShortcutName := "1Hub.lnk"
 DefaultModuleFolder := A_ScriptDir "\modules"
-ScriptFolder := LoadScriptFolder()
-Modules := []                           ; Array of {Name, Path}
+ScriptFolder := LoadScriptFolder()`nif AUTO_START_ONLY_TRUSTED_MODULE_FOLDER && !IsTrustedModuleFolder(ScriptFolder)`n    AUTO_START_MODULES_ON_LAUNCH := false`nModules := []                           ; Array of {Name, Path}
 Pids := Map()                           ; Module full path -> PID
 PopupGui := ""
 PopupOpenedActiveHwnd := 0
@@ -128,10 +127,7 @@ ChooseDefaultFolder(*) {
     start := DirExist(ScriptFolder) ? ScriptFolder : A_ScriptDir
     selected := SelectDefaultFolder(start)
 
-    if (selected = "")
-        return
-
-    ; Avoid orphaned scripts from the old folder.
+    if (selected = "")`n        return`n`n    if !ConfirmModuleFolderSelection(selected)`n        return`n`n    ; Avoid orphaned scripts from the old folder.
     StopAllInternal(false)
 
     ScriptFolder := selected
@@ -151,6 +147,47 @@ SelectDefaultFolder(start) {
     }
 }
 
+
+ConfirmModuleFolderSelection(folder) {
+    global AUTO_START_ONLY_TRUSTED_MODULE_FOLDER
+
+    if !AUTO_START_ONLY_TRUSTED_MODULE_FOLDER || IsTrustedModuleFolder(folder)
+        return true
+
+    result := MsgBox(
+        "This folder is outside the bundled modules folder:`n`n" folder "`n`nAHK Hub can run every top-level .ahk file in the selected folder. Only continue if this folder is trusted.",
+        "1hub - Trust module folder?",
+        "Icon! YesNo Default2"
+    )
+
+    return result = "Yes"
+}
+
+IsTrustedModuleFolder(folder) {
+    global DefaultModuleFolder
+
+    return PathStartsWithFolder(folder, DefaultModuleFolder)
+}
+
+PathStartsWithFolder(child, parent) {
+    child := NormalizeFolderPath(child)
+    parent := NormalizeFolderPath(parent)
+
+    return child = parent || SubStr(child, 1, StrLen(parent) + 1) = parent "\"
+}
+
+NormalizeFolderPath(path) {
+    path := Trim(path)
+
+    while StrLen(path) > 3 {
+        lastChar := SubStr(path, StrLen(path), 1)
+        if (lastChar != "\" && lastChar != "/")
+            break
+        path := SubStr(path, 1, StrLen(path) - 1)
+    }
+
+    return StrLower(StrReplace(path, "/", "\"))
+}
 StartupShortcutPath() {
     global StartupShortcutName
 
