@@ -131,7 +131,13 @@ ChooseDefaultFolder(*) {
     start := DirExist(ScriptFolder) ? ScriptFolder : A_ScriptDir
     selected := SelectDefaultFolder(start)
 
-    if (selected = "")`n        return`n`n    if !ConfirmModuleFolderSelection(selected)`n        return`n`n    ; Avoid orphaned scripts from the old folder.
+    if (selected = "")
+        return
+
+    if !ConfirmModuleFolderSelection(selected)
+        return
+
+    ; Avoid orphaned scripts from the old folder.
     StopAllInternal(false)
 
     ScriptFolder := selected
