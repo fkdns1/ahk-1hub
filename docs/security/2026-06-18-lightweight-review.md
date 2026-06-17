@@ -18,6 +18,10 @@ Result: the tool intentionally discovers and runs top-level `*.ahk` files from t
 
 Severity: medium
 
+## Fix Applied - 2026-06-18
+
+Changed `1Hub.ahk` so auto-start is disabled when the saved module folder is outside the bundled `modules` folder. Folder selection now warns before accepting a custom module folder outside that trusted default location.
+
 ## Notes
 
-This was a lightweight review, not a full audit. Main follow-up is operational guidance for trusted module folders.
+This was a lightweight review, not a full audit. Main follow-up is to keep module folders user-controlled and avoid shared/download folders for executable AHK modules.
