@@ -4,6 +4,8 @@ Persistent
 DetectHiddenWindows True
 SetWorkingDir A_ScriptDir
 
+EnsureSupportedWindowsVersion()
+
 ; =========================================================
 ; AHK Hub v2
 ; - One visible tray icon.
@@ -62,6 +64,18 @@ return
 ; =========================================================
 ; Settings / module discovery
 ; =========================================================
+
+EnsureSupportedWindowsVersion() {
+    if (A_OSVersion = "WIN_10" || A_OSVersion = "WIN_11")
+        return
+
+    MsgBox(
+        "This script supports Windows 10 and Windows 11 only.`nDetected: " A_OSVersion,
+        "Unsupported Windows version",
+        "Iconx"
+    )
+    ExitApp(1)
+}
 
 LoadScriptFolder() {
     global ConfigFile, DefaultModuleFolder
